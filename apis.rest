@@ -19,8 +19,9 @@ Content-Type: application/json
   "password": "De@206914"
 }
 ###
-POST http://localhost:3000/api/login
+POST http://localhost:3000/api/notes
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkRlYm9zM0BleGFtcGxlLmNvbSIsInN1YiI6NiwiaWF0IjoxNzkwOTg5MzAwLCJleHAiOjE3OTA5ODkzNjB9.oGh_8ZVNO4QZZnHn-1sSXnW69XpNibWEG-cDAqpzF6Y
 
 {
   "title": "Note 1",
