@@ -8,3 +8,4 @@ export class RegisterDto {
   @IsStrongPassword()
   password: string;
 }
+

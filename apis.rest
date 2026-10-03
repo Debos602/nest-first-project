@@ -18,3 +18,11 @@ Content-Type: application/json
   "email": "Debos3@example.com",
   "password": "De@206914"
 }
+###
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+  "title": "Note 1",
+  "body": "This is the body of Note 1"
+}
