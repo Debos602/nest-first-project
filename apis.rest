@@ -1,29 +1,57 @@
-GET http://localhost:3000
+@baseUrl = http://localhost:3000
 
 ###
-POST http://localhost:3000/api/register
+POST {{baseUrl}}/api/register
 Content-Type: application/json
 
 {
-  "name": "Debos",
+  "name": "Debos58",
+  "email": "Debos58@example.com",
+  "password": "De@206914"
+}
+
+###
+# @name login
+POST {{baseUrl}}/api/login
+Content-Type: application/json
+
+{
   "email": "Debos3@example.com",
   "password": "De@206914"
 }
 
 ###
-POST http://localhost:3000/api/login
-Content-Type: application/json
+@token = {{login.response.body.access_token}}
 
-{
-  "email": "Debos3@example.com",
-  "password": "De@206914"
-}
 ###
-POST http://localhost:3000/api/notes
+POST {{baseUrl}}/api/notes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkRlYm9zM0BleGFtcGxlLmNvbSIsInN1YiI6NiwiaWF0IjoxNzkwOTg5MzAwLCJleHAiOjE3OTA5ODkzNjB9.oGh_8ZVNO4QZZnHn-1sSXnW69XpNibWEG-cDAqpzF6Y
+Authorization: Bearer {{token}}
 
 {
   "title": "Note 1",
   "body": "This is the body of Note 1"
 }
+
+###
+GET {{baseUrl}}/api/notes?skip=0&take=3
+Authorization: Bearer {{token}}
+
+// get a single note
+###
+GET {{baseUrl}}/api/notes/10
+Authorization: Bearer {{token}}
+###
+PATCH {{baseUrl}}/api/notes/10
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{ 
+  "title": "Note 10",
+  "body": "This is the body of Note 1"
+}
+### 
+DELETE {{baseUrl}}/api/notes/19
+Content-Type: application/json
+Authorization: Bearer {{token}}
+

@@ -17,4 +17,15 @@ model User {
   password   String
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
+  Note      Note[]
+}
+
+model Note {
+  id         Int      @id @default(autoincrement())
+  title      String
+  body       String
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id])
+  userId     Int
 }
