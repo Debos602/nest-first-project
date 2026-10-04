@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:5000
 
 ###
 POST {{baseUrl}}/api/register
@@ -16,7 +16,7 @@ POST {{baseUrl}}/api/login
 Content-Type: application/json
 
 {
-  "email": "Debos3@example.com",
+  "email": "Debos58@example.com",
   "password": "De@206914"
 }
 
