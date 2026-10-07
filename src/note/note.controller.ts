@@ -1,7 +1,17 @@
 // note.controller.ts
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete,
-  UseGuards, Request, Query, ParseIntPipe, DefaultValuePipe,
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+  Query,
+  ParseIntPipe,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { NoteService } from './note.service';
@@ -14,7 +24,10 @@ export class NoteController {
   constructor(private readonly noteService: NoteService) {}
 
   @Post()
-  create(@Body() dto: CreateNoteDto, @Request() req: { user: { sub: number } }) {
+  create(
+    @Body() dto: CreateNoteDto,
+    @Request() req: { user: { sub: number } },
+  ) {
     return this.noteService.create(dto, req.user.sub);
   }
 
@@ -28,7 +41,10 @@ export class NoteController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number, @Request() req: { user: { sub: number } }) {
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: { sub: number } },
+  ) {
     return this.noteService.findOne(id, req.user.sub);
   }
 
@@ -42,7 +58,10 @@ export class NoteController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number, @Request() req: { user: { sub: number } }) {
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req: { user: { sub: number } },
+  ) {
     return this.noteService.remove(id, req.user.sub);
   }
 }

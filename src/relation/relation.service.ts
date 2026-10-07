@@ -1,0 +1,28 @@
+import { Injectable } from '@nestjs/common';
+import { CreateRelationDto } from './dto/create-relation.dto';
+import { UpdateRelationDto } from './dto/update-relation.dto';
+
+@Injectable()
+export class RelationService {
+  create(createRelationDto: CreateRelationDto) {
+    void createRelationDto;
+    return 'This action adds a new relation';
+  }
+
+  findAll() {
+    return `This action returns all relation`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} relation`;
+  }
+
+  update(id: number, updateRelationDto: UpdateRelationDto) {
+    void updateRelationDto;
+    return `This action updates a #${id} relation`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} relation`;
+  }
+}

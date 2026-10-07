@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { AuthGuard } from '../auth/auth.guard';
 import { NoteController } from './note.controller';
 import { NoteService } from './note.service';
 
@@ -8,8 +9,11 @@ describe('NoteController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [NoteController],
-      providers: [NoteService],
-    }).compile();
+      providers: [{ provide: NoteService, useValue: {} }],
+    })
+      .overrideGuard(AuthGuard)
+      .useValue({ canActivate: () => true })
+      .compile();
 
     controller = module.get<NoteController>(NoteController);
   });

@@ -1,9 +1,9 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateNoteDto {
-    @IsNotEmpty()
-    title: string;
-    
-    @IsNotEmpty()
-    body: string;
+  @IsNotEmpty()
+  title: string;
+
+  @IsNotEmpty()
+  body: string;
 }
