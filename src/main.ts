@@ -2,10 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConsoleLogger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { INestApplication } from '@nestjs/common';
+import type { Request, Response } from 'express';
 
-let cachedApp: any;
+let cachedApp: INestApplication | null = null;
 
-async function bootstrap() {
+async function bootstrap(): Promise<INestApplication> {
   const app = await NestFactory.create(AppModule, {
     logger: new ConsoleLogger({
       colors: true,
@@ -28,19 +30,28 @@ async function bootstrap() {
   return app;
 }
 
-export default async function handler(req: any, res: any) {
+export default async function handler(
+  req: Request,
+  res: Response,
+): Promise<void> {
   if (!cachedApp) {
     cachedApp = await bootstrap();
   }
-  return cachedApp.getHttpAdapter().getInstance().callback()(req, res);
+  const httpAdapter = cachedApp.getHttpAdapter();
+  const instance = httpAdapter.getInstance() as {
+    callback: () => (req: Request, res: Response) => void;
+  };
+  instance.callback()(req, res);
 }
 
 if (require.main === module) {
-  bootstrap().then((app) => {
-    const port = process.env.PORT ?? 5000;
-    app.listen(port);
-  }).catch((error: unknown) => {
-    console.error(error);
-    process.exitCode = 1;
-  });
+  void bootstrap()
+    .then(async (app) => {
+      const port = process.env.PORT ?? 5000;
+      await app.listen(port);
+    })
+    .catch((error: unknown) => {
+      console.error(error);
+      process.exitCode = 1;
+    });
 }
