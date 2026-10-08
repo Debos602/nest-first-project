@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ConsoleLogger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+let cachedApp: any;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: new ConsoleLogger({
@@ -22,9 +24,23 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
-  await app.listen(process.env.PORT ?? 5000);
+  await app.init();
+  return app;
 }
-bootstrap().catch((error: unknown) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+
+export default async function handler(req: any, res: any) {
+  if (!cachedApp) {
+    cachedApp = await bootstrap();
+  }
+  return cachedApp.getHttpAdapter().getInstance().callback()(req, res);
+}
+
+if (require.main === module) {
+  bootstrap().then((app) => {
+    const port = process.env.PORT ?? 5000;
+    app.listen(port);
+  }).catch((error: unknown) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
