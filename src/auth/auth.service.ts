@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 import { RegisterDto } from './dto/register.dto';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 

@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
-import { PrismaService } from 'src/prisma.service';
-import { Prisma } from 'src/generated/prisma/client';
+import { PrismaService } from '../prisma.service';
+import { Prisma } from '../generated/prisma/client';
 
 @Injectable()
 export class NoteService {
