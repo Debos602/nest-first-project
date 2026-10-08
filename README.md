@@ -70,6 +70,22 @@ $ mau deploy
 
 With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
+### Authentication cookies
+
+Authentication uses a 10-minute access-token cookie and a 7-day rotating refresh-token cookie. Refresh-token hashes are stored in PostgreSQL so sessions can be revoked and token reuse can be detected.
+
+Set these environment variables in each deployment environment:
+
+- `JWT_SECRET`: a unique, randomly generated secret of at least 32 bytes.
+- `JWT_REFRESH_SECRET`: a different randomly generated secret of at least 32 bytes.
+- `DATABASE_URL`: the PostgreSQL connection string.
+- `CLIENT_ORIGIN`: the exact browser client origin; set this when the client is on a different origin. Multiple origins can be comma-separated.
+- `COOKIE_SAME_SITE`: optional; `lax` by default. Use `none` only for a cross-site client over HTTPS.
+
+Before deploying, apply the database migration with `npx prisma migrate deploy`.
+
+For browser clients, first call `GET /api/csrf` with credentials enabled and keep the returned `csrfToken`. Send it in the `x-csrf-token` header on `POST /api/register`, `/api/login`, `/api/refresh`, and `/api/logout`, and on other state-changing requests authenticated by the access-token cookie. Include credentials on requests so the browser sends the cookies. Access and refresh tokens are never returned in the JSON response.
+
 ## Resources
 
 Check out a few resources that may come in handy when working with NestJS:

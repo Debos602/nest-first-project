@@ -13,6 +13,13 @@ async function bootstrap(): Promise<INestApplication> {
   });
   app.useGlobalPipes(new ValidationPipe());
 
+  const allowedOrigins = process.env.CLIENT_ORIGIN?.split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+  if (allowedOrigins?.length) {
+    app.enableCors({ origin: allowedOrigins, credentials: true });
+  }
+
   const config = new DocumentBuilder()
     .setTitle('Notes API documentation')
     .setDescription('The notes API description')
