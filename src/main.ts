@@ -25,6 +25,10 @@ async function bootstrap(): Promise<INestApplication> {
     .setDescription('The notes API description')
     .setVersion('1.0')
     .addTag('notes')
+     .addBearerAuth(
+    { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+    'access_token', // <-- controller er naam er sathe exactly same
+  )
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

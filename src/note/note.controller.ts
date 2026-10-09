@@ -17,8 +17,10 @@ import { AuthGuard } from '../auth/auth.guard';
 import { NoteService } from './note.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard) // পুরো controller-এ একবারে
+@ApiBearerAuth("access_token")
 @Controller('api/notes')
 export class NoteController {
   constructor(private readonly noteService: NoteService) {}

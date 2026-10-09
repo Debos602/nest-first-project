@@ -1,8 +1,16 @@
 @baseUrl = http://localhost:5000
 
 ###
+# @name csrf
+GET {{baseUrl}}/api/csrf
+
+###
+@csrfToken = {{csrf.response.body.csrfToken}}
+
+###
 POST {{baseUrl}}/api/register
 Content-Type: application/json
+x-csrf-token: {{csrfToken}}
 
 {
   "name": "Debos58",
@@ -14,6 +22,7 @@ Content-Type: application/json
 # @name login
 POST {{baseUrl}}/api/login
 Content-Type: application/json
+x-csrf-token: {{csrfToken}}
 
 {
   "email": "Debos58@example.com",
@@ -54,4 +63,3 @@ Authorization: Bearer {{token}}
 DELETE {{baseUrl}}/api/notes/19
 Content-Type: application/json
 Authorization: Bearer {{token}}
-

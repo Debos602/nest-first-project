@@ -21,7 +21,7 @@ import {
   setCsrfCookie,
 } from './cookie-security';
 import { jwtConstants } from './constants';
-
+import { ApiCsrfHeader } from 'src/helper/api-csrf-header.decorator';
 @Controller('api')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -33,7 +33,9 @@ export class AuthController {
     return { csrfToken };
   }
 
+
   @Post('register')
+  @ApiCsrfHeader()
   async register(
     @Body() registerDto: RegisterDto,
     @Req() request: Request,
@@ -51,6 +53,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiCsrfHeader()
   async login(
     @Body() loginDto: LoginDto,
     @Req() request: Request,
@@ -68,6 +71,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+   @ApiCsrfHeader()
   async refresh(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
@@ -90,6 +94,7 @@ export class AuthController {
   }
 
   @Post('logout')
+   @ApiCsrfHeader()
   async logout(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,

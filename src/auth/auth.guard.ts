@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
     }
 
     if (cookieToken && !['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
-      assertCsrfToken(request);
+      assertCsrfToken(request); 
     }
 
     try {
