@@ -21,7 +21,7 @@ import {
   setCsrfCookie,
 } from './cookie-security';
 import { jwtConstants } from './constants';
-import { ApiCsrfHeader } from 'src/helper/api-csrf-header.decorator';
+import { ApiCsrfHeader } from '../helper/api-csrf-header.decorator';
 @Controller('api')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
